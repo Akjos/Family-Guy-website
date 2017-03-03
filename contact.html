@@ -14,7 +14,7 @@
 			<h2>Header Menu</h2>
 			<ul class="menu">
 				<li>
-					<a href="#"><p>Home</p></a>
+					<a href="index.html"><p>Home</p></a>
 				</li>
 				<li>
 					<img class="menu-icon" src="img/griffin-menu-icon.png" alt=" ">
@@ -87,14 +87,24 @@
 				</li>
 			</ul>
 		</nav>
-		<article class="art-main">
-			<section class="art-section">
-				<img class="img-art" src="img/logo-sitcom.png" title="Character Image" alt="Character Image">
-				<h3>The best sitcom ever!</h3>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent mattis volutpat lacus, eu finibus nunc tristique ut. Cras feugiat tempus ante, sit amet molestie purus malesuada tincidunt. Maecenas felis dolor, tincidunt a leo eget, dapibus lobortis nunc. Nulla est libero, commodo quis tristique a, elementum id risus. Donec id fringilla ipsum, quis dictum justo. Nulla nec massa quis elit venenatis varius. Nulla non varius nisi. Vivamus in massa ipsum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Curabitur ultricies enim sed quam placerat tristique.<br><br>Phasellus volutpat risus lacus, sed condimentum nunc dapibus eu. Aliquam vitae orci tincidunt nibh venenatis convallis quis non urna. Donec tincidunt, ex id sodales dignissim, dui arcu scelerisque metus, vel dapibus dui nibh vitae nunc. Morbi posuere erat id dolor dignissim, sed interdum dolor tincidunt. Duis ut metus sapien. Nunc ut enim ut orci bibendum aliquet. Proin interdum accumsan nulla vitae sodales. Praesent a vehicula libero. Cras imperdiet hendrerit nulla non pretium. Etiam est massa, rutrum eget ex in, gravida viverra leo. Nullam ut leo libero. Fusce tempor nibh libero, ut posuere arcu hendrerit sit amet. Interdum et malesuada fames ac ante ipsum primis in faucibus. Ut pulvinar massa id metus dignissim, imperdiet sollicitudin lectus luctus.<br><br>Suspendisse aliquam a magna et vulputate. Nulla at interdum libero. Donec aliquam libero ornare dictum scelerisque. Aenean congue, odio vitae interdum feugiat, leo eros convallis quam, eu malesuada neque enim nec massa. Quisque in erat nisi. Nunc mauris orci, tincidunt a ipsum quis, posuere feugiat purus. Nulla dictum purus maximus purus rhoncus, eu tincidunt massa cursus. Maecenas sit amet bibendum orci. Duis posuere, lorem at accumsan condimentum, velit ipsum consectetur ipsum, in vulputate metus metus quis velit. Nunc nibh justo, tempus sit amet bibendum in, placerat at lacus. Praesent ut mi id ex faucibus pulvinar eget a ante. Proin nec erat pharetra, cursus lorem tempor, imperdiet risus. Aliquam non dictum felis, at tempor nulla.
-				</p>
-			</section>
-		</article>
+		<div class="wraper">
+			<form class="form-contact" method="post" action="...">
+                <p>Form Contact:</p>
+				<fieldset name="data">
+                    <label>Name:<br><input id="I" type="text" name="name" placeholder="Przemyslaw"></label>
+					<label>Surname:<br><input type="text" name="surname" placeholder="Sojka"></label>
+					<label>E-mail:<br><input class="incorrectInput"} type="text" name="e-mail" placeholder="Sojka_p@o2.pl"></label>
+					<label>Phone:<br><input type="text" name="phone" placeholder="883 647 387"></label>
+				</fieldset>
+				<fieldset name="message">
+					<label>Title message:<br><input type="text" name="title-message" placeholder="Problem with Grifin-family page"></label>
+					<label>Message:<div class="stick"><textarea name="message"> I noticed big problem on page !!</textarea></div></label>
+				</fieldset>
+                <button class="reset-button form-button" type="reset">Reset</button>
+                <button type="submit" class="send-button form-button" type="reset">Send</button>
+				<hr class="vertical-line">
+			</form>
+		</div>
 	</main>
 	<footer class="footer">
 		<p>&copy; 2016 Designed and built by Przemyslaw Sojka Website made for educational purposes.</p>
