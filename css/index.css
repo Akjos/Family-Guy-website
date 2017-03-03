@@ -261,8 +261,13 @@ h3{
 	background: 0;
 	font-size: 1.7rem;
 }
-.incorrectInput{
+.form-contact .incorrectInput {
     border-color: #ff0000;
+    color: #ff0000;
+}
+.form-contact .correctInput {
+    border-color: #008000;
+    color: #008000;
 }
 .form-contact textarea {
 	width: 270px;
