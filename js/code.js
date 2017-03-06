@@ -26,8 +26,8 @@ function checkNameSurname() {
     check(name, reg);
 }
 function checkEmail() {
-    email = this;
-    var reg = /^[0-9a-zA-Z_.-]+@[0-9a-zA-Z.-]+\.[a-zA-Z]{2,3}$/;
+    var email = this;
+    var reg = /^[0-9a-zA-Z_.]+@[0-9a-zA-Z.]+\.[a-zA-Z]{2,3}$/;
     check(email, reg);
 }
 function checkPhone() {
@@ -36,9 +36,14 @@ function checkPhone() {
     check(phone, reg);
 }
 function checkForm() {
-    document.querySelector('input[name="name"]').addEventListener('change', checkNameSurname);
-    document.querySelector('input[name="surname"]').addEventListener('change', checkNameSurname);
-    document.querySelector('input[name="e-mail"]').addEventListener('change', checkEmail);
-    document.querySelector('input[name="phone"]').addEventListener('change', checkPhone);
+    var name = location.pathname;
+    if (name.search("contact") !== -1) {
+        document.querySelector('input[name="name"]').addEventListener('change', checkNameSurname);
+        document.querySelector('input[name="surname"]').addEventListener('change', checkNameSurname);
+        document.querySelector('input[name="e-mail"]').addEventListener('change', checkEmail);
+        document.querySelector('input[name="phone"]').addEventListener('change', checkPhone);
+    } else {
+        return;
+    }
 }
 document.addEventListener("DOMContentLoaded", checkForm);
