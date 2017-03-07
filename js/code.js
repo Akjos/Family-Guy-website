@@ -22,18 +22,18 @@ function check(name, reg) {
     }
 }
 function checkNameSurname() {
-    var name = this;
-    var reg = /^[A-Z]{1}[a-z]{2,}$/g;
+    var name = this,
+        reg = /^[A-Z]{1}[a-z]{2,}$/g;
     check(name, reg);
 }
 function checkEmail() {
-    var email = this;
-    var reg = /^[0-9a-zA-Z_.]+@[0-9a-zA-Z.]+\.[a-zA-Z]{2,3}$/;
+    var email = this,
+        reg = /^[0-9a-zA-Z_.]+@[0-9a-zA-Z.]+\.[a-zA-Z]{2,3}$/;
     check(email, reg);
 }
 function checkPhone() {
-    var phone = this;
-    var reg = /[0-9\s]{9}/;
+    var phone = this,
+        reg = /[0-9\s]{9}/;
     check(phone, reg);
 }
 function checkForm() {
@@ -49,14 +49,17 @@ function checkForm() {
 }
 document.addEventListener("DOMContentLoaded", checkForm);
 //display go up batton...................................
-document.addEventListener("DOMContentLoaded",displayBtn);
-function displayBtn () {
-    if( window.innerHeight >= document.body.clientHeight ) {
-        console.log(window.innerHeight);
-        var btn = document.querySelector(".go-to-top" );
+function displayBtn() {
+    if (window.innerHeight >= document.body.clientHeight) {
+        var btn = document.querySelector(".go-to-top");
         btn.classList.add("nodisplay");
-    } else {
-        console.log("nie pokarze");
-        return ;
     }
 }
+document.addEventListener("DOMContentLoaded", displayBtn);
+//footer always bottom.....................
+document.addEventListener("DOMContentLoaded", function () {
+    var main = document.querySelector(".main"),
+        height = window.innerHeight;
+    main.style.minHeight = height - 302 + "px";
+
+});
