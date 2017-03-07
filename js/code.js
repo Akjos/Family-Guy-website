@@ -1,3 +1,4 @@
+//drop down menu........................................
 function fixedMenu() {
 	var headMenu = document.getElementById("headMenu");
 	if (document.body.scrollTop > 150) {
@@ -9,7 +10,7 @@ function fixedMenu() {
 window.onscroll = function () {
     fixedMenu();
 };
-
+//check form............................................
 function check(name, reg) {
     if (!reg.test(name.value)) {
         name.classList.remove("correctInput");
@@ -47,3 +48,15 @@ function checkForm() {
     }
 }
 document.addEventListener("DOMContentLoaded", checkForm);
+//display go up batton...................................
+document.addEventListener("DOMContentLoaded",displayBtn);
+function displayBtn () {
+    if( window.innerHeight >= document.body.clientHeight ) {
+        console.log(window.innerHeight);
+        var btn = document.querySelector(".go-to-top" );
+        btn.classList.add("nodisplay");
+    } else {
+        console.log("nie pokarze");
+        return ;
+    }
+}
