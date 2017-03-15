@@ -50,12 +50,16 @@ function checkForm() {
 document.addEventListener("DOMContentLoaded", checkForm);
 //display go up batton...................................
 function displayBtn() {
+    var btn = document.querySelector(".go-to-top");
     if (window.innerHeight >= document.body.clientHeight) {
-        var btn = document.querySelector(".go-to-top");
+        btn.classList.remove("nodisplay");
+    } else {
         btn.classList.add("nodisplay");
     }
 }
-document.addEventListener("DOMContentLoaded", displayBtn);
+document.addEventListener("DOMContentLoaded", window.onresize = function () {
+    displayBtn();
+});
 //footer always bottom.....................
 document.addEventListener("DOMContentLoaded", function () {
     var main = document.querySelector(".main"),
@@ -63,3 +67,68 @@ document.addEventListener("DOMContentLoaded", function () {
     main.style.minHeight = height - 302 + "px";
 
 });
+//photo gallery
+Lightbox = function (obW) {
+    this.obW = obW;
+    this.modal = null;
+    this.lightbox = null;
+    this.image = null;
+    this.imageWidth = 0;
+    this.imageHeight = 0;
+    this.o = this;
+    this.destroy = function () {
+        this.modal.parentNode.removeChild(this.modal);
+        this.lightbox.parentNode.removeChild(this.lightbox);
+    };
+    this.init = function () {
+        var ob = this.o,
+            href = this.obW.href,
+            body = document.getElementsByTagName('body')[0];
+        this.image = new Image();
+        this.image.onload = function () {
+            ob.imageWidth = ob.image.width;
+            ob.imageHeight = ob.image.height;
+            ob.modal = document.createElement('div');
+            ob.modal.className = 'modal';
+            ob.modal.onclick = function () {
+                ob.destroy();
+            };
+            ob.lightbox = document.createElement('div');
+            ob.lightbox.className = 'lightbox';
+            ob.lightbox.style.marginTop = -(ob.imageHeight / 2) + 'px';
+            ob.lightbox.style.marginLeft = -(ob.imageWidth / 2) + 'px';
+            ob.lightbox.style.width = ob.imageWidth + 'px';
+            ob.lightbox.style.height = ob.imageHeight + 'px';
+            ob.lightbox.appendChild(ob.image);
+            var btnClose = document.createElement('div');
+            btnClose.className = "close-icone";
+            btnClose.value = "x";
+            btnClose.onclick = function () {
+                ob.destroy();
+            };
+            ob.lightbox.appendChild(btnClose);
+            body.appendChild(ob.modal);
+            body.appendChild(ob.lightbox);
+        };
+        this.image.src = this.obW.href;
+    };
+    this.init();
+};
+ 
+
+Node.prototype.lightbox = function () {
+    this.onclick = function () {
+        var lighbox = new Lightbox(this);
+        return false;
+    };
+    
+};
+
+window.onload = function () {
+    var a = document.getElementsByTagName('a');
+    for (var i = 0; i < a.length; i++) {
+        if (a[i].className === 'gallery-img') {
+            a[i].lightbox();
+        }
+    }
+};
