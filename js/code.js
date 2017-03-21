@@ -68,67 +68,100 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 //photo gallery
-Lightbox = function (obW) {
-    this.obW = obW;
-    this.modal = null;
-    this.lightbox = null;
-    this.image = null;
-    this.imageWidth = 0;
-    this.imageHeight = 0;
-    this.o = this;
-    this.destroy = function () {
-        this.modal.parentNode.removeChild(this.modal);
-        this.lightbox.parentNode.removeChild(this.lightbox);
-    };
-    this.init = function () {
-        var ob = this.o,
-            href = this.obW.href,
-            body = document.getElementsByTagName('body')[0];
-        this.image = new Image();
-        this.image.onload = function () {
-            ob.imageWidth = ob.image.width;
-            ob.imageHeight = ob.image.height;
-            ob.modal = document.createElement('div');
-            ob.modal.className = 'modal';
-            ob.modal.onclick = function () {
-                ob.destroy();
-            };
-            ob.lightbox = document.createElement('div');
-            ob.lightbox.className = 'lightbox';
-            ob.lightbox.style.marginTop = -(ob.imageHeight / 2) + 'px';
-            ob.lightbox.style.marginLeft = -(ob.imageWidth / 2) + 'px';
-            ob.lightbox.style.width = ob.imageWidth + 'px';
-            ob.lightbox.style.height = ob.imageHeight + 'px';
-            ob.lightbox.appendChild(ob.image);
-            var btnClose = document.createElement('div');
-            btnClose.className = "close-icone";
-            btnClose.value = "x";
-            btnClose.onclick = function () {
-                ob.destroy();
-            };
-            ob.lightbox.appendChild(btnClose);
-            body.appendChild(ob.modal);
-            body.appendChild(ob.lightbox);
-        };
-        this.image.src = this.obW.href;
-    };
-    this.init();
-};
- 
-
-Node.prototype.lightbox = function () {
-    this.onclick = function () {
-        var lighbox = new Lightbox(this);
-        return false;
-    };
-    
-};
-
-window.onload = function () {
-    var a = document.getElementsByTagName('a');
-    for (var i = 0; i < a.length; i++) {
-        if (a[i].className === 'gallery-img') {
-            a[i].lightbox();
+(function () {
+    'use strict';
+    function init() {
+        var gallery = document.getElementById('gallery'),
+            img = gallery.getElementsByTagName('a');
+        for (var i = 0; i < img.length ; i++) {
+            img[i].lightbox();
+        }
+    }   
+    Node.prototype.lightbox = function () {
+        this.onclick = function() {
+            var a = create(this);
+            return false;
         }
     }
-};
+    function create (event) {
+        var body = document.getElementsByTagName('body')[0],
+            modal = document.createElement('div'),
+            lightbox = document.createElement('div'),
+            close_btn = document.createElement('button'),
+            next_btn = document.createElement('button'),
+            previous_btn = document.createElement('button'),
+            img = document.createElement('img'),
+            title = document.createElement('span'),
+            href = event.href,
+            previous = event.previousSibling.previousSibling,
+            next = event.nextSibling.nextSibling;
+        title.className = 'title';
+        img.src = href;
+        modal.className = 'modal';
+        lightbox.className = 'lightbox';
+        close_btn.className = 'close_btn';
+        next_btn.className = 'next_btn';
+        previous_btn.className = 'previous_btn';
+        img.onload = put;
+        modal.addEventListener('click',destroy);
+        close_btn.addEventListener('click', destroy);
+        next_btn.addEventListener('click', next_Photo);
+        previous_btn.addEventListener('click', previous_Photo);
+        document.addEventListener('keyup', pressKey);
+        function pressKey (e) {
+            switch (e.keyCode) {
+                case 37:
+                    next_Photo();
+                break;
+                case 39:
+                    previous_Photo();
+                break;
+                case 27:
+                    destroy();
+                break;
+                default:
+                    break;
+            }
+        }
+        function put () {
+            body.appendChild(modal);
+            body.appendChild(lightbox);
+            lightbox.appendChild(close_btn);
+            lightbox.appendChild(img);
+            lightbox.appendChild(title);
+            lightbox.appendChild(next_btn);
+            lightbox.appendChild(previous_btn);
+            title.appendChild(document.createTextNode(event.firstChild.title));
+            lightbox.style.marginTop = -(img.height/2) + 'px';
+            lightbox.style.marginLeft = -(img.width/2) + 'px';
+        }
+        function destroy () {
+            body.removeChild(modal);
+            body.removeChild(lightbox);
+            document.removeEventListener('keyup', pressKey);
+            return false;
+        }
+        function next_Photo() {
+            destroy();
+            if (event.nextSibling.nextSibling) {
+                create(event.nextSibling.nextSibling);
+            } else {
+                var parent = event.parentNode;
+                    create(parent.firstChild.nextSibling);
+            }
+            return false;
+         }
+         function previous_Photo() {
+             destroy();
+             if (previous) {
+                 create(previous);
+             } else {
+                 var parent = event.parentNode;
+                 create(parent.lastChild.previousSibling);
+             }
+             return false;
+         }
+         return false;
+    }
+    window.onload = init;
+})();
