@@ -79,11 +79,11 @@ document.addEventListener("DOMContentLoaded", function () {
     }   
     Node.prototype.lightbox = function () {
         this.onclick = function() {
-            var a = create(this);
+            var a = main(this);
             return false;
         }
     }
-    function create (event) {
+    function main (event) {
         var body = document.getElementsByTagName('body')[0],
             modal = document.createElement('div'),
             lightbox = document.createElement('div'),
@@ -92,22 +92,36 @@ document.addEventListener("DOMContentLoaded", function () {
             previous_btn = document.createElement('button'),
             img = document.createElement('img'),
             title = document.createElement('span'),
-            href = event.href,
-            previous = event.previousSibling.previousSibling,
-            next = event.nextSibling.nextSibling;
+            href = event.href;
         title.className = 'title';
-        img.src = href;
         modal.className = 'modal';
         lightbox.className = 'lightbox';
         close_btn.className = 'close_btn';
         next_btn.className = 'next_btn';
         previous_btn.className = 'previous_btn';
-        img.onload = put;
         modal.addEventListener('click',destroy);
         close_btn.addEventListener('click', destroy);
         next_btn.addEventListener('click', next_Photo);
         previous_btn.addEventListener('click', previous_Photo);
         document.addEventListener('keyup', pressKey);
+        create();
+
+        function create () {
+            body.appendChild(modal);
+            body.appendChild(lightbox);
+            lightbox.appendChild(close_btn);
+            lightbox.appendChild(next_btn);
+            lightbox.appendChild(previous_btn);
+            putImg();
+        }
+        function putImg () {
+            img.src = href;
+            img.onload = function () {
+                lightbox.appendChild(img);
+                lightbox.appendChild(title);
+                title.appendChild(document.createTextNode(event.firstChild.title));
+            }
+        }
         function pressKey (e) {
             switch (e.keyCode) {
                 case 37:
@@ -120,48 +134,44 @@ document.addEventListener("DOMContentLoaded", function () {
                     destroy();
                 break;
                 default:
-                    break;
+                break;
             }
         }
-        function put () {
-            body.appendChild(modal);
-            body.appendChild(lightbox);
-            lightbox.appendChild(close_btn);
-            lightbox.appendChild(img);
-            lightbox.appendChild(title);
-            lightbox.appendChild(next_btn);
-            lightbox.appendChild(previous_btn);
-            title.appendChild(document.createTextNode(event.firstChild.title));
-            lightbox.style.marginTop = -(img.height/2) + 'px';
-            lightbox.style.marginLeft = -(img.width/2) + 'px';
+        function next_Photo () {
+            var next = event.nextSibling.nextSibling,
+                parent = event.parentNode.firstChild.nextSibling;
+            removeImg ();
+            if (next) {
+                href = next.href;
+                event = next;
+            } else {
+                href = parent.href;
+                event = parent;
+            }
+            putImg();
+        }
+        function previous_Photo () {
+            var previous = event.previousSibling.previousSibling,
+                parent = event.parentNode.lastChild.previousSibling;
+            removeImg ();
+            if (previous) {
+                href = previous.href;
+                event = previous;
+            } else {
+                href = parent.href;
+                event = parent;
+            }
+            putImg();
+        }
+        function removeImg () {
+            lightbox.removeChild(img);
+            title.removeChild(title.firstChild);
         }
         function destroy () {
             body.removeChild(modal);
             body.removeChild(lightbox);
             document.removeEventListener('keyup', pressKey);
-            return false;
         }
-        function next_Photo() {
-            destroy();
-            if (event.nextSibling.nextSibling) {
-                create(event.nextSibling.nextSibling);
-            } else {
-                var parent = event.parentNode;
-                    create(parent.firstChild.nextSibling);
-            }
-            return false;
-         }
-         function previous_Photo() {
-             destroy();
-             if (previous) {
-                 create(previous);
-             } else {
-                 var parent = event.parentNode;
-                 create(parent.lastChild.previousSibling);
-             }
-             return false;
-         }
-         return false;
     }
     window.onload = init;
 })();
