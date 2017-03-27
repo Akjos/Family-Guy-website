@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", function () {
             next_btn = document.createElement('button'),
             previous_btn = document.createElement('button'),
             img = document.createElement('img'),
-            title = document.createElement('span'),
+            title = document.createElement('p'),
             href = event.href;
         title.className = 'title';
         modal.className = 'modal';
@@ -173,5 +173,9 @@ document.addEventListener("DOMContentLoaded", function () {
             document.removeEventListener('keyup', pressKey);
         }
     }
-    window.onload = init;
+    window.onload = function () {
+    if (document.getElementById('gallery')){
+        init();
+    }
+}
 })();
