@@ -1,0 +1,64 @@
+html {
+    background-color: #666666;
+    padding: 0;
+    margin: 50px;
+    text-align: center;
+}
+li {
+    list-style-type: none;
+}
+ul {
+    padding: 0;
+}
+.stoper {
+    width: 370px;
+    margin: auto;
+    border: 2px solid black;
+    background: #555555;
+}
+button {
+    width: 120px;
+    margin: 10px;
+    padding: 5px;
+    border: none;
+    background-color: #04640f;
+    font-size: 40px;
+}
+.stoper > :nth-child(2) {
+    background-color: #db1100;
+}
+.stoper button:last-child {
+    width: 100%;
+    margin: 0;
+    background-color: #ffff00;
+}
+.stoper p {
+    margin: 0;
+    font-size: 70px;
+    text-align: center;
+    color: #cccccc;
+}
+.display {
+    display: none;
+    background-color: #600905;
+}
+.scoreboard {
+    width: 500px;
+    margin: 0 auto;
+    background-color: #594bc3;
+    border: 3px black solid ;
+    color: #000000;
+    text-align: left;
+    font-size: 30px;
+}
+.scoreboard li:first-child {
+    color:#cccccc;
+    font-style: ;
+}
+.scoreboard li:nth-child(2n-1) {
+    background-color: #483ab2;
+}
+.scoreboard button {
+    width: 100%;
+    margin: 0;
+}
